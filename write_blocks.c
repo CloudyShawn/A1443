@@ -102,6 +102,7 @@ int main(int argc, char *argv[])
   time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
   /* result in MB per second */
 	printf ("Data rate: %.3f MBPS\n", ((total_records*sizeof(Record))/time_spent)/1000000);
+  printf("Tital Records: %li\n", total_records);
 
   return 0;
 }
