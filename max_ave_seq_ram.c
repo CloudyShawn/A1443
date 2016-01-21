@@ -98,7 +98,7 @@ int main(int argc, char *argv[])
   /* result in MB per second */
 	printf ("Data rate: %.3f MBPS\n", ((total_records*sizeof(Record))/time_spent)/1000000);
   printf("Total Records: %li\n", total_records);
-  printf("Average Follows: %li\nMax Follows: %d, with %d follows\n", total_records / total_users, max_follows_user, max_follows);
+  printf("Average Follows: %li\nMax Follows: user %d, with %d follows\n", total_records / total_users, max_follows_user, max_follows);
 
   return 0;
 }

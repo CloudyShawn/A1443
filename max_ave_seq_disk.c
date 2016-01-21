@@ -46,49 +46,50 @@ int main(int argc, char *argv[])
     return -1;
   }
 
-  //Calculating size of file
-  fseek(in_file, 0, SEEK_END);
-  unsigned long file_size = ftell(in_file);
-  fseek(in_file, 0, SEEK_SET);
-
-  //Allocating record buffer for size of file
-  total_records = file_size / sizeof(Record);
-  Record *buffer = (Record *)(calloc(total_records, sizeof(Record)));
+  //Allocating record buffer for block size
+  Record *buffer = (Record *)(calloc(num_records_per_block, sizeof(Record)));
 
   //Variables for stats
   int curr_user = -1;
   int total_users = 0;
   int curr_follows = 0;
   int max_follows = -1;
-
-  //Read entire file into buffer
-  fread(buffer, sizeof(Record), total_records, in_file);
+  int max_follows_user = -1;
 
   //Start clock
   begin = clock();
 
-  int i;
-  for(i = 0; i < total_records; i++)
+  int read_records = fread(buffer, sizeof(Record), num_records_per_block, in_file);
+  while(read_records > 0)
   {
-    if(curr_user != buffer[i].uid1)
+    total_records += read_records;
+
+    int i;
+    for(i = 0; i < read_records; i++)
     {
-      curr_user = buffer[i].uid1;
-      total_users++;
-
-      if(curr_follows > max_follows)
+      if(curr_user != buffer[i].uid1)
       {
-        max_follows = curr_follows;
-        curr_follows = 0;
-      }
-    }
+        if(curr_follows > max_follows)
+        {
+          max_follows = curr_follows;
+          max_follows_user = curr_user;
+          curr_follows = 0;
+        }
 
-    curr_follows++;
+        curr_user = buffer[i].uid1;
+        total_users++;
+      }
+
+      curr_follows++;
+    }
+    read_records = fread(buffer, sizeof(Record), num_records_per_block, in_file);
   }
 
   //Final user # follows
   if(curr_follows > max_follows)
   {
     max_follows = curr_follows;
+    max_follows_user = curr_user;
   }
 
   //Stop clock
@@ -104,7 +105,7 @@ int main(int argc, char *argv[])
   /* result in MB per second */
 	printf ("Data rate: %.3f MBPS\n", ((total_records*sizeof(Record))/time_spent)/1000000);
   printf("Total Records: %li\n", total_records);
-  printf("Average Follows: %li\nMax Follows: %d\n", total_records / total_users, max_follows);
+  printf("Average Follows: %li\nMax Follows: user %d, with %d follows\n", total_records / total_users, max_follows_user, max_follows);
 
   return 0;
 }
