@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
   //Checking for correct arguments
   if (argc != 2)
   {
-    printf("Usage: write_blocks <input filename>\n");
+    printf("Usage: max_ave_seq_ram <input filename>\n");
     return -1;
   }
 
@@ -87,6 +87,7 @@ int main(int argc, char *argv[])
 
   //Stop clock
   end = clock();
+  time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
 
   //Closes all files opened
   fclose(in_file);
@@ -94,7 +95,6 @@ int main(int argc, char *argv[])
   //Frees malloc'd buffer space
   free(buffer);
 
-  time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
   /* result in MB per second */
 	printf ("Data rate: %.3f MBPS\n", ((total_records*sizeof(Record))/time_spent)/1000000);
   printf("Total Records: %li\n", total_records);

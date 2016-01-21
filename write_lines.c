@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
   //Checking for correct arguments
   if (argc != 2)
   {
-    printf("Usage: write_blocks <input filename>\n");
+    printf("Usage: write_lines <input filename>\n");
     return -1;
   }
 

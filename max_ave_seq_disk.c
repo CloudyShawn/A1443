@@ -21,9 +21,9 @@ int main(int argc, char *argv[])
   long total_records = 0;
 
   //Checking for correct arguments
-  if (argc != 2)
+  if (argc != 3)
   {
-    printf("Usage: write_blocks <input filename>\n");
+    printf("Usage: max_ave_seq_disk <input filename> <block size>\n");
     return -1;
   }
 
@@ -35,6 +35,14 @@ int main(int argc, char *argv[])
   if(!(in_file = fopen(file_name, "rb")))
   {
     printf("Could not open file %s for reading\n", file_name);
+    return -1;
+  }
+
+  int block_size = atoi(argv[2]);
+  int num_records_per_block = block_size / sizeof(Record);
+  if(num_records_per_block * sizeof(Record) != block_size)
+  {
+    printf("Block size must be a multiple of %lu\n", sizeof(Record));
     return -1;
   }
 
