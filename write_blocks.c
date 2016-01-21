@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
   //Finishes writing left over buffer to file
   if(records_added > 0)
   {
-    fwrite(buffer, sizeof(Record), num_records_per_block, out_file);
+    fwrite(buffer, sizeof(Record), records_added, out_file);
   }
 
   //Forces flush out of output stream buffer to disk
@@ -102,7 +102,7 @@ int main(int argc, char *argv[])
   time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
   /* result in MB per second */
 	printf ("Data rate: %.3f MBPS\n", ((total_records*sizeof(Record))/time_spent)/1000000);
-  printf("Tital Records: %li\n", total_records);
+  printf("Total Records: %li\n", total_records);
 
   return 0;
 }
