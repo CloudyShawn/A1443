@@ -16,4 +16,4 @@ max_ave_seq_disk: max_ave_seq_disk.c
 	$(CC) -o $@ $^ $(CFLAGS)
 
 clean:
-	rm write_lines write_blocks
+	rm write_lines write_blocks max_ave_seq_ram max_ave_seq_disk records.dat
