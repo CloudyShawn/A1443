@@ -60,8 +60,8 @@ int main(int argc, char *argv[])
     buffer->uid2 = atoi(split_line);
 
     total_records++;
-
-    fwrite(buffer, sizeof(Record), 1, out_file);
+    
+    fwrite(buffer, sizeof(*buffer), 1, out_file);
   }
 
   //Forces flush out of output stream buffer to disk

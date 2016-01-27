@@ -45,22 +45,22 @@ int main(int argc, char *argv[])
 
   //Allocating record buffer for size of file
   total_records = file_size / sizeof(Record);
-  Record *buffer = (Record *)(calloc(total_records, sizeof(Record)));
+  Record *buffer = calloc(total_records, sizeof(Record));
 
   //Variables for stats
   int curr_user = -1;
   int total_users = 0;
   int curr_follows = 0;
-  int max_follows = -1;
+  int max_follows = 0;
   int max_follows_user = -1;
 
   //Read entire file into buffer
-  fread(buffer, sizeof(Record), total_records, in_file);
+  fread(buffer, sizeof(*buffer), total_records, in_file);
 
   //Start clock
   begin = clock();
 
-  int i;
+  long i;
   for(i = 0; i < total_records; i++)
   {
     if(curr_user != buffer[i].uid1)
@@ -69,11 +69,11 @@ int main(int argc, char *argv[])
       {
         max_follows = curr_follows;
         max_follows_user = curr_user;
-        curr_follows = 0;
       }
 
       curr_user = buffer[i].uid1;
       total_users++;
+      curr_follows = 0;
     }
 
     curr_follows++;
@@ -83,6 +83,7 @@ int main(int argc, char *argv[])
   if(curr_follows > max_follows)
   {
     max_follows = curr_follows;
+    max_follows_user = curr_user;
   }
 
   //Stop clock

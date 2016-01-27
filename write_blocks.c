@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
     //Writes to binary file if buffer is full
     if(records_added == num_records_per_block)
     {
-      fwrite(buffer, sizeof(Record), num_records_per_block, out_file);
+      fwrite(buffer, sizeof(*buffer), records_added, out_file);
       records_added = 0;
     }
   }

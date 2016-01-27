@@ -73,16 +73,16 @@ int main(int argc, char *argv[])
         {
           max_follows = curr_follows;
           max_follows_user = curr_user;
-          curr_follows = 0;
         }
 
+        curr_follows = 0;
         curr_user = buffer[i].uid1;
         total_users++;
       }
 
       curr_follows++;
     }
-    read_records = fread(buffer, sizeof(Record), num_records_per_block, in_file);
+    read_records = fread(buffer, sizeof(*buffer), num_records_per_block, in_file);
   }
 
   //Final user # follows
