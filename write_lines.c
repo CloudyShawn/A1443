@@ -5,7 +5,7 @@
 
 #define KB 1024
 #define MB (1024 * 1024)
-#define OUTPUT_FILE_NAME "records.dat"
+#define OUTPUT_FILE_NAME "edges.dat"
 #define LINE_MAX_LENGTH 255
 
 typedef struct record
@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
     buffer->uid2 = atoi(split_line);
 
     total_records++;
-    
+
     fwrite(buffer, sizeof(*buffer), 1, out_file);
   }
 

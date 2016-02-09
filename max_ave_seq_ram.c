@@ -5,7 +5,7 @@
 
 #define KB 1024
 #define MB (1024 * 1024)
-#define OUTPUT_FILE_NAME "records.dat"
+#define OUTPUT_FILE_NAME "edges.dat"
 #define LINE_MAX_LENGTH 255
 
 typedef struct record
